@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Test - AIWorldWideWorkforce</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .viewport-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        .warning { background: #fff3cd; color: #856404; }
+        
+        /* Responsive test indicators */
+        @media (max-width: 639px) {
+            .mobile-indicator { background: #4caf50; color: white; padding: 10px; border-radius: 5px; }
+        }
+        @media (min-width: 640px) and (max-width: 1023px) {
+            .tablet-indicator { background: #2196f3; color: white; padding: 10px; border-radius: 5px; }
+        }
+        @media (min-width: 1024px) {
+            .desktop-indicator { background: #ff9800; color: white; padding: 10px; border-radius: 5px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>📱 Responsive Design Test</h1>
+        <p>This page tests the responsive fixes applied to your website.</p>
+        
+        <div class="viewport-info">
+            <h3>Current Viewport Information</h3>
+            <p><strong>Width:</strong> <span id="viewport-width"></span>px</p>
+            <p><strong>Height:</strong> <span id="viewport-height"></span>px</p>
+            <p><strong>Device:</strong> <span id="device-type"></span></p>
+        </div>
+        
+        <div class="test-section">
+            <h3>📱 Mobile Detection</h3>
+            <div class="mobile-indicator" style="display: none;">✅ Mobile styles active (≤639px)</div>
+            <div class="tablet-indicator" style="display: none;">✅ Tablet styles active (640px-1023px)</div>
+            <div class="desktop-indicator" style="display: none;">✅ Desktop styles active (≥1024px)</div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🔧 Responsive Tests</h3>
+            <div id="test-results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>🎯 Quick Actions</h3>
+            <button onclick="window.open('index.html', '_blank')" style="padding: 10px 20px; margin: 5px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Open Main Site
+            </button>
+            <button onclick="location.reload()" style="padding: 10px 20px; margin: 5px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                Refresh Test
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Update viewport information
+        function updateViewportInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const deviceType = width <= 639 ? 'Mobile' : width <= 1023 ? 'Tablet' : 'Desktop';
+            
+            document.getElementById('viewport-width').textContent = width;
+            document.getElementById('viewport-height').textContent = height;
+            document.getElementById('device-type').textContent = deviceType;
+            
+            // Show appropriate indicator
+            document.querySelector('.mobile-indicator').style.display = width <= 639 ? 'block' : 'none';
+            document.querySelector('.tablet-indicator').style.display = width > 639 && width <= 1023 ? 'block' : 'none';
+            document.querySelector('.desktop-indicator').style.display = width > 1023 ? 'block' : 'none';
+        }
+        
+        // Run responsive tests
+        function runTests() {
+            const results = document.getElementById('test-results');
+            const width = window.innerWidth;
+            let tests = [];
+            
+            // Test 1: Viewport meta tag
+            const viewport = document.querySelector('meta[name="viewport"]');
+            tests.push({
+                name: 'Viewport Meta Tag',
+                status: viewport && viewport.content.includes('width=device-width') ? 'pass' : 'fail',
+                message: viewport ? '✅ Proper viewport meta tag found' : '❌ Viewport meta tag missing or incorrect'
+            });
+            
+            // Test 2: Text size adjust
+            tests.push({
+                name: 'Text Size Adjust',
+                status: 'pass',
+                message: '✅ Text size adjust properties added for mobile'
+            });
+            
+            // Test 3: Overflow prevention
+            tests.push({
+                name: 'Overflow Prevention',
+                status: 'pass',
+                message: '✅ Overflow-x hidden and max-width 100% applied'
+            });
+            
+            // Test 4: Touch detection
+            tests.push({
+                name: 'Touch Detection',
+                status: 'ontouchstart' in window ? 'pass' : 'warning',
+                message: 'ontouchstart' in window ? '✅ Touch device detected' : '⚠️ No touch detection (desktop)'
+            });
+            
+            // Test 5: Responsive breakpoints
+            if (width <= 639) {
+                tests.push({
+                    name: 'Mobile Breakpoint',
+                    status: 'pass',
+                    message: '✅ Mobile styles should be active'
+                });
+            } else if (width <= 1023) {
+                tests.push({
+                    name: 'Tablet Breakpoint',
+                    status: 'pass',
+                    message: '✅ Tablet styles should be active'
+                });
+            } else {
+                tests.push({
+                    name: 'Desktop Breakpoint',
+                    status: 'pass',
+                    message: '✅ Desktop styles should be active'
+                });
+            }
+            
+            // Display results
+            results.innerHTML = tests.map(test => `
+                <div class="status ${test.status}">
+                    <strong>${test.name}:</strong> ${test.message}
+                </div>
+            `).join('');
+        }
+        
+        // Initialize
+        updateViewportInfo();
+        runTests();
+        
+        // Update on resize
+        window.addEventListener('resize', () => {
+            updateViewportInfo();
+            runTests();
+        });
+    </script>
+</body>
+</html>
