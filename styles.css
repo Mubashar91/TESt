@@ -908,6 +908,21 @@ body.dark .benefit-card:hover {
     }
 }
 
+/* Better tablet layout */
+@media (min-width: 768px) and (max-width: 1279px) {
+    .packages-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 0 1rem;
+        gap: 1.5rem;
+    }
+    
+    .package-card:last-child {
+        grid-column: 1 / -1;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
 .package-card {
     padding: 1.5rem;
     border-radius: 1rem;
@@ -1483,6 +1498,7 @@ body.dark .featured-btn:hover {
     .package-card:hover,
     .benefit-card:hover {
         transform: none;
+        box-shadow: none;
     }
     
     .btn-primary:active,
@@ -1494,21 +1510,40 @@ body.dark .featured-btn:hover {
     .benefit-card:active {
         transform: scale(0.98);
     }
+    
+    /* Remove hover effects on touch devices */
+    .language-switcher:hover .language-menu {
+        display: none;
+    }
+    
+    .language-menu {
+        display: none;
+    }
+    
+    .language-switcher.active .language-menu {
+        display: block;
+    }
 }
 
 /* Better mobile scrolling */
 @media (max-width: 639px) {
     html {
         scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
     }
     
     body {
         overscroll-behavior: contain;
+        min-height: 100vh;
+        overflow-x: hidden;
     }
     
     .container {
         padding-left: 1rem;
         padding-right: 1rem;
+        max-width: 100vw;
+        overflow-x: hidden;
     }
     
     /* Prevent horizontal scroll */
@@ -1520,6 +1555,50 @@ body.dark .featured-btn:hover {
     img, svg {
         max-width: 100%;
         height: auto;
+        display: block;
+    }
+    
+    /* Fix package grid for mobile */
+    .packages-grid {
+        padding: 0 0.5rem;
+        gap: 1rem;
+        grid-template-columns: 1fr;
+        max-width: 100%;
+    }
+    
+    .package-card {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 1rem;
+    }
+    
+    /* Fix hero content overflow */
+    .hero-content {
+        padding: 1rem 0;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    
+    .hero-title {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
+    }
+    
+    /* Fix header for mobile */
+    .header-content {
+        padding: 0 0.5rem;
+    }
+    
+    .logo-text {
+        font-size: 1rem;
+        line-height: 1.2;
+    }
+    
+    .logo-image {
+        width: 60px;
+        height: 45px;
     }
 }
 

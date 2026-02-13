@@ -32,6 +32,21 @@ const languageMenu = document.querySelector('.language-menu');
 const languageOptions = document.querySelectorAll('.language-option');
 const mobileLangButtons = document.querySelectorAll('.mobile-lang-btn');
 
+// Touch-friendly language switcher for mobile
+if ('ontouchstart' in window) {
+    languageBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        languageMenu.style.display = languageMenu.style.display === 'block' ? 'none' : 'block';
+    });
+    
+    // Close language menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!languageBtn.contains(e.target) && !languageMenu.contains(e.target)) {
+            languageMenu.style.display = 'none';
+        }
+    });
+}
+
 // Language content
 const translations = {
     en: {
