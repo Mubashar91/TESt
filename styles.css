@@ -1476,68 +1476,107 @@ body.dark .featured-btn:hover {
         font-size: 0.875rem;
     }
     
-    /* Header Mobile */
-    .header-content {
-        height: 4rem;
-    }
-    
-    .logo-text {
-        font-size: 1.25rem;
-    }
-    
-    .logo-image {
-        width: 80px;
-        height: 60px;
-    }
-    
     /* Hero Mobile */
     .hero {
-        padding: 4rem 1rem 2rem;
+        padding: 5rem 0.75rem 2rem;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+    
+    .hero-container {
+        padding: 0;
+        max-width: 100%;
+    }
+    
+    .hero-content {
+        text-align: center;
+        padding: 1rem 0;
     }
     
     .hero-title {
         font-size: 1.75rem;
-        line-height: 1.1;
+        line-height: 1.2;
         margin-bottom: 1rem;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        hyphens: auto;
     }
     
     .hero-description {
         font-size: 0.9375rem;
+        line-height: 1.5;
         margin-bottom: 1.5rem;
         max-width: 100%;
-        line-height: 1.4;
     }
     
     .hero-buttons {
+        display: flex;
+        flex-direction: column;
         gap: 0.75rem;
         margin-top: 1.5rem;
     }
     
     .btn-primary, .btn-secondary {
-        font-size: 0.875rem;
-        padding: 0.75rem 1.25rem;
-        min-height: 2.5rem;
         width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+        padding: 0.875rem 1.5rem;
+        font-size: 0.875rem;
+        min-height: 2.75rem;
+    }
+    
+    /* Main Content */
+    .main-content {
+        margin-top: 3.5rem;
+    }
+    
+    /* Container */
+    .container {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+    
+    /* Prevent horizontal scroll */
+    * {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+    
+    img, svg {
+        max-width: 100%;
+        height: auto;
+        display: block;
     }
     
     /* Sections Mobile */
     .section-title {
         font-size: 2rem;
         margin-bottom: 1rem;
+        line-height: 1.2;
     }
     
     .section-subtitle {
         font-size: 1rem;
         margin-bottom: 2rem;
+        line-height: 1.5;
     }
     
     .benefits {
-        padding: 3rem 1rem;
+        padding: 3rem 0.75rem;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 0;
     }
     
     .benefit-card {
-        padding: 1.25rem;
-        margin-bottom: 1rem;
+        padding: 1.5rem;
+        text-align: center;
     }
     
     .benefit-icon {
@@ -1554,20 +1593,24 @@ body.dark .featured-btn:hover {
     
     .benefit-description {
         font-size: 0.875rem;
-        line-height: 1.4;
+        line-height: 1.5;
     }
     
     .packages {
-        padding: 3rem 1rem;
+        padding: 3rem 0.75rem;
     }
     
     .packages-grid {
-        padding: 0 5%;
+        grid-template-columns: 1fr;
         gap: 1.5rem;
+        padding: 0;
+        max-width: 100%;
     }
     
     .package-card {
-        padding: 1.25rem;
+        width: 100%;
+        max-width: 100%;
+        padding: 1.5rem;
     }
     
     .package-title {
@@ -1577,8 +1620,8 @@ body.dark .featured-btn:hover {
     
     .package-description {
         font-size: 0.875rem;
-        margin-bottom: 1rem;
-        line-height: 1.4;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
     }
     
     .package-features {
@@ -1586,46 +1629,45 @@ body.dark .featured-btn:hover {
     }
     
     .feature-item {
-        font-size: 0.8rem;
+        font-size: 0.875rem;
         margin-bottom: 0.75rem;
-        flex-direction: column;
-        text-align: center;
-        gap: 0.5rem;
-    }
-    
-    .check-icon {
-        width: 1rem;
-        height: 1rem;
+        text-align: left;
+        flex-direction: row;
+        gap: 0.75rem;
     }
     
     .package-btn {
-        padding: 0.75rem 1rem;
+        padding: 0.875rem 1.5rem;
         font-size: 0.875rem;
-        min-height: 2.25rem;
+        min-height: 2.75rem;
     }
     
     .cta {
-        padding: 3rem 1rem;
+        padding: 3rem 0.75rem;
     }
     
     .cta-title {
         font-size: 1.75rem;
         margin-bottom: 1rem;
+        line-height: 1.2;
     }
     
     .cta-description {
         font-size: 0.9375rem;
         margin-bottom: 1.5rem;
+        line-height: 1.5;
     }
     
     .cta-btn {
-        padding: 0.75rem 1.5rem;
+        padding: 0.875rem 1.5rem;
         font-size: 0.875rem;
-        min-height: 2.25rem;
+        min-height: 2.75rem;
+        width: 100%;
+        max-width: 280px;
     }
     
     .footer {
-        padding: 2rem 1rem 1rem;
+        padding: 2rem 0.75rem 1rem;
     }
     
     .footer-content {
@@ -1646,9 +1688,91 @@ body.dark .featured-btn:hover {
     .footer-text {
         font-size: 0.8rem;
     }
-    
-    /* Touch-friendly improvements */
 }
+
+/* Tablet Responsive */
+@media (min-width: 640px) and (max-width: 1023px) {
+    .header-content {
+        height: 4rem;
+    }
+    
+    .logo-image {
+        width: 70px;
+        height: 50px;
+    }
+    
+    .logo-text {
+        font-size: 1.25rem;
+    }
+    
+    .desktop-nav {
+        display: flex;
+        gap: 1.5rem;
+    }
+    
+    .nav-link {
+        font-size: 0.8rem;
+    }
+    
+    .language-switcher {
+        margin-right: 0.5rem;
+    }
+    
+    .consultation-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.8rem;
+    }
+    
+    .hero {
+        padding: 5rem 1rem 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-description {
+        font-size: 1.125rem;
+    }
+    
+    .hero-buttons {
+        flex-direction: row;
+        gap: 1rem;
+    }
+    
+    .btn-primary, .btn-secondary {
+        width: auto;
+        max-width: none;
+    }
+    
+    .benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+    
+    .packages-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+        padding: 0 1rem;
+    }
+    
+    .package-card:last-child {
+        grid-column: 1 / -1;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+    
+    .footer-info {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* Touch-friendly improvements */
 @media (max-width: 639px) and (hover: none) {
     .btn-primary:hover,
     .btn-secondary:hover,
