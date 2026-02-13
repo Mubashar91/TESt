@@ -1301,7 +1301,7 @@ body.dark .featured-btn:hover {
 }
 
 /* MOBILE STYLES - CONSOLIDATED */
-@media (max-width: 639px) {
+@media (max-width: 639px), (max-device-width: 639px) {
     html {
         font-size: 16px;
         -webkit-text-size-adjust: 100%;
@@ -1779,7 +1779,7 @@ body.dark .featured-btn:hover {
 }
 
 /* Touch-friendly improvements */
-@media (max-width: 639px) and (hover: none) {
+@media (max-width: 639px), (max-device-width: 639px) {
     .btn-primary:hover,
     .btn-secondary:hover,
     .package-card:hover,
