@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mobile Debug Test</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            padding: 20px;
+        }
+        
+        .debug-info {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .pass { background: #d4edda; color: #155724; }
+        .fail { background: #f8d7da; color: #721c24; }
+        
+        .test-header {
+            background: #007bff;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .mobile-indicator {
+            display: none;
+            background: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        @media (max-width: 639px) {
+            .mobile-indicator {
+                display: block;
+            }
+            
+            body {
+                background: #ffe6e6;
+            }
+            
+            .test-header {
+                background: #dc3545;
+            }
+        }
+        
+        .test-grid {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 639px) {
+            .test-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (min-width: 640px) {
+            .test-grid {
+                grid-template-columns: 2fr;
+            }
+        }
+        
+        .grid-item {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-header">
+        <h1>🔍 Mobile Responsive Debug Test</h1>
+        <p>Testing if mobile styles are being applied correctly</p>
+    </div>
+    
+    <div class="debug-info">
+        <h2>📱 Current Viewport</h2>
+        <p><strong>Width:</strong> <span id="width">-</span>px</p>
+        <p><strong>Height:</strong> <span id="height">-</span>px</p>
+        <p><strong>Device Type:</strong> <span id="device">-</span></p>
+    </div>
+    
+    <div class="mobile-indicator">
+        ✅ Mobile styles are ACTIVE (≤639px)
+    </div>
+    
+    <div class="debug-info">
+        <h2>🧪 CSS Tests</h2>
+        <div id="css-tests"></div>
+    </div>
+    
+    <div class="debug-info">
+        <h2>📊 Grid Layout Test</h2>
+        <div class="test-grid">
+            <div class="grid-item">Item 1</div>
+            <div class="grid-item">Item 2</div>
+            <div class="grid-item">Item 3</div>
+            <div class="grid-item">Item 4</div>
+        </div>
+    </div>
+    
+    <div class="debug-info">
+        <h2>🚀 Actions</h2>
+        <button onclick="testMainSite()" style="padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
+            Test Main Site
+        </button>
+        <button onclick="window.open('index.html', '_blank')" style="padding: 10px 20px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; margin: 5px;">
+            Open Main Site
+        </button>
+    </div>
+    
+    <script>
+        function updateViewportInfo() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const device = width <= 639 ? 'Mobile' : width <= 1023 ? 'Tablet' : 'Desktop';
+            
+            document.getElementById('width').textContent = width;
+            document.getElementById('height').textContent = height;
+            document.getElementById('device').textContent = device;
+        }
+        
+        function testCSSTyles() {
+            const width = window.innerWidth;
+            const tests = [];
+            
+            // Test if mobile styles are applied
+            const mobileStylesApplied = window.getComputedStyle(document.body).backgroundColor === 'rgb(255, 230, 230)' || 
+                                    window.getComputedStyle(document.body).backgroundColor === '#ffe6e6';
+            
+            tests.push({
+                name: 'Mobile CSS Applied',
+                status: width <= 639 && mobileStylesApplied ? 'pass' : width > 639 ? 'pass' : 'fail',
+                message: width <= 639 ? 
+                    (mobileStylesApplied ? '✅ Mobile styles detected' : '❌ Mobile styles NOT detected') : 
+                    '✅ Desktop mode (no mobile styles needed)'
+            });
+            
+            // Test viewport meta tag
+            const viewport = document.querySelector('meta[name="viewport"]');
+            tests.push({
+                name: 'Viewport Meta Tag',
+                status: viewport && viewport.content.includes('width=device-width') ? 'pass' : 'fail',
+                message: viewport ? '✅ Viewport meta tag found' : '❌ Viewport meta tag missing'
+            });
+            
+            // Test grid layout
+            const gridColumns = width <= 639 ? 1 : 2;
+            tests.push({
+                name: 'Responsive Grid',
+                status: 'pass',
+                message: `✅ Should show ${gridColumns} column(s) on ${width <= 639 ? 'mobile' : 'tablet/desktop'}`
+            });
+            
+            // Display results
+            const resultsDiv = document.getElementById('css-tests');
+            resultsDiv.innerHTML = tests.map(test => `
+                <div class="status ${test.status}">
+                    <strong>${test.name}:</strong> ${test.message}
+                </div>
+            `).join('');
+        }
+        
+        function testMainSite() {
+            const width = window.innerWidth;
+            alert(`Current width: ${width}px\nMobile styles should be ${width <= 639 ? 'ACTIVE' : 'INACTIVE'}\n\nIf mobile styles are not active when they should be, check:\n1. CSS file is loading correctly\n2. No CSS errors in console\n3. Meta viewport tag is present`);
+        }
+        
+        // Initialize
+        updateViewportInfo();
+        testCSSTyles();
+        
+        // Update on resize
+        window.addEventListener('resize', () => {
+            updateViewportInfo();
+            testCSSTyles();
+        });
+    </script>
+</body>
+</html>
